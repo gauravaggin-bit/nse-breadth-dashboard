@@ -75,7 +75,7 @@ const DATA = /*__DATA__*/null;
 if(!DATA) return;
 const S=DATA.series, T=DATA.summary, L=DATA.lists;
 const N=S.dates.length;
-const fmt=(v,d=0)=>v==null?'â':Number(v).toLocaleString('en-IN',{maximumFractionDigits:d,minimumFractionDigits:d});
+const fmt=(v,d=0)=>v==null?'–':Number(v).toLocaleString('en-IN',{maximumFractionDigits:d,minimumFractionDigits:d});
 const last=k=>S[k][N-1], prev=k=>S[k][N-2];
 const clsChg=v=>v>0?'pos':v<0?'neg':'';
 const monthName=new Date(T.as_of).toLocaleString('en-IN',{month:'long'});
@@ -90,7 +90,7 @@ app.innerHTML=`
 <header>
   <div>
     <h1>NSE market breadth</h1>
-    <p class="sub">All main-board stocks (EQ series), ${fmt(last('universe_size'))} names Â· close of ${T.as_of}</p>
+    <p class="sub">All main-board stocks (EQ series), ${fmt(last('universe_size'))} names · close of ${T.as_of}</p>
   </div>
   <div class="idx">
     <div class="sub">${T.index_name}</div>
@@ -100,7 +100,7 @@ app.innerHTML=`
 </header>
 
 <div class="tape">
-  <div><div class="v"><span class="pos">${fmt(last('advances'))}</span> <small>/</small> <span class="neg">${fmt(last('declines'))}</span></div><div class="l">Advances / declines Â· ${fmt(last('unchanged'))} unchanged</div></div>
+  <div><div class="v"><span class="pos">${fmt(last('advances'))}</span> <small>/</small> <span class="neg">${fmt(last('declines'))}</span></div><div class="l">Advances / declines · ${fmt(last('unchanged'))} unchanged</div></div>
   <div><div class="v">${fmt(last('ad_ratio'),2)}</div><div class="l">A/D ratio (yesterday ${fmt(prev('ad_ratio'),2)})</div></div>
   <div><div class="v"><span class="pos">${fmt(last('new_high'))}</span> <small>/</small> <span class="neg">${fmt(last('new_low'))}</span></div><div class="l">New 52-week highs / lows</div></div>
   <div><div class="v">${fmt(last('pct_above_20'),0)}%</div><div class="l">Above 20 DMA</div></div>
@@ -110,13 +110,13 @@ app.innerHTML=`
 
 <div class="toolbar" id="ranges"></div>
 
-<section class="chart"><div class="head"><h2>Advanceâdecline line against ${T.index_name}</h2>
-  <div class="legend"><span><i style="background:var(--ink)"></i>A/D line (cumulative advances â declines)</span><span><i style="background:var(--index)"></i>${T.index_name}</span></div></div>
+<section class="chart"><div class="head"><h2>Advance–decline line against ${T.index_name}</h2>
+  <div class="legend"><span><i style="background:var(--ink)"></i>A/D line (cumulative advances − declines)</span><span><i style="background:var(--index)"></i>${T.index_name}</span></div></div>
   <div id="c_adline"></div></section>
 
 <div class="two">
 <section class="chart"><div class="head"><h2>Advance / decline ratio</h2><div class="legend"><span>Above 1 = more advances than declines</span></div></div><div id="c_ratio"></div></section>
-<section class="chart"><div class="head"><h2>New 52-week highs and lows</h2><div class="legend"><span><i style="background:var(--up)"></i>Highs</span><span><i style="background:var(--down)"></i>Lows</span><span>â ${T.index_name} new 52-wk high</span></div></div><div id="c_hl"></div></section>
+<section class="chart"><div class="head"><h2>New 52-week highs and lows</h2><div class="legend"><span><i style="background:var(--up)"></i>Highs</span><span><i style="background:var(--down)"></i>Lows</span><span>◆ ${T.index_name} new 52-wk high</span></div></div><div id="c_hl"></div></section>
 </div>
 
 <section class="chart"><div class="head"><h2>Stocks trading above their moving average</h2>
@@ -125,14 +125,14 @@ app.innerHTML=`
 
 <div class="two">
 <section>
-  <h2>New highs â ${monthName} and ${T.as_of.slice(0,4)} so far</h2>
+  <h2>New highs — ${monthName} and ${T.as_of.slice(0,4)} so far</h2>
   <table>
     <tr><th></th><th>Today</th><th>This month</th><th>This year</th></tr>
     <tr><td>Days ${T.index_name} closed at a new 52-week high</td><td>${S.index_new_52w_high[N-1]?'yes':'no'}</td><td>${T.index_new_52w_high_days_mtd}</td><td>${T.index_new_52w_high_days_ytd}</td></tr>
     <tr><td>Days ${T.index_name} closed at an all-time high*</td><td>${S.index_new_ath[N-1]?'yes':'no'}</td><td>${T.index_new_ath_days_mtd}</td><td>${T.index_new_ath_days_ytd}</td></tr>
     <tr><td>${T.index_name} members at a new 52-week high (${T.n50_members} tracked)</td><td>${T.n50_new_high_today}</td><td>${T.n50_new_high_mtd}</td><td>${T.n50_new_high_ytd}</td></tr>
-    <tr><td>All stocks â new 52-week highs</td><td>${fmt(last('new_high'))}</td><td>${fmt(T.stock_new_high_mtd)}</td><td>${fmt(T.stock_new_high_ytd)}</td></tr>
-    <tr><td>All stocks â new 52-week lows</td><td>${fmt(last('new_low'))}</td><td>${fmt(T.stock_new_low_mtd)}</td><td>${fmt(T.stock_new_low_ytd)}</td></tr>
+    <tr><td>All stocks — new 52-week highs</td><td>${fmt(last('new_high'))}</td><td>${fmt(T.stock_new_high_mtd)}</td><td>${fmt(T.stock_new_high_ytd)}</td></tr>
+    <tr><td>All stocks — new 52-week lows</td><td>${fmt(last('new_low'))}</td><td>${fmt(T.stock_new_low_mtd)}</td><td>${fmt(T.stock_new_low_ytd)}</td></tr>
   </table>
   <p class="sub" style="font-size:12px">*Highest close in the stored history (from ${T.history_start}); if the index's true record predates that, treat this as "highest since ${T.history_start}".</p>
 </section>
@@ -143,7 +143,7 @@ app.innerHTML=`
 </section>
 </div>
 
-<footer>Source: NSE official archive files â cash-market bhavcopy (all listed stocks), index close file and Nifty 50 constituent list, downloaded by <code>breadth_update.py</code>. Advances/declines use NSE's adjusted previous close. New highs/lows compare today's intraday high/low with the prior 250 trading days (stocks need â¥200 days of history). Generated ${T.generated_at}.</footer>`;
+<footer>Source: NSE official archive files — cash-market bhavcopy (all listed stocks), index close file and Nifty 50 constituent list, downloaded by <code>breadth_update.py</code>. Advances/declines use NSE's adjusted previous close. New highs/lows compare today's intraday high/low with the prior 250 trading days (stocks need ≥200 days of history). Generated ${T.generated_at}.</footer>`;
 
 /* ---------- range buttons ---------- */
 const rb=document.getElementById('ranges');
