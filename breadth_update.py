@@ -217,7 +217,7 @@ def compute(bhav: dict[date, pd.DataFrame], idx: dict[date, dict], n50: set[str]
     ix = ix.reindex(close.index).ffill()
     ix_prior_max = ix["close"].shift(1).rolling(WINDOW_52W, min_periods=MIN_HISTORY_52W).max()
     ix_new_52w = ix["close"] > ix_prior_max
-    ix_new_ath = ix["close"] > ix["close"].shift(1).expanding().max()  # highest in stored history
+    ix_new_ath = ix["close"] > ix["close"].shift(1).expanding().max()   # highest in stored history
 
     # ---- assemble
     valid = pct_above[200].notna()          # only publish days with full 200-DMA coverage
