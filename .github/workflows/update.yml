@@ -2,8 +2,17 @@ name: Update NSE breadth dashboard
 
 on:
   schedule:
-    # 14:30 UTC = 20:00 IST, Mon–Fri. NSE usually has the bhavcopy up by 19:30 IST.
-    - cron: "30 14 * * 1-5"
+    # GitHub only runs scheduled workflows on a "best effort" basis, and its queue
+    # can delay a single cron entry by several hours on a free/public-repo schedule.
+    # To still land close to 20:00 IST most days, we fire several times through the
+    # evening instead of once; the script is safe to run repeatedly (it only commits
+    # when there's actually a new day's data, so extra runs are harmless no-ops).
+    - cron: "15 13 * * 1-5"   # 18:45 IST
+    - cron: "45 13 * * 1-5"   # 19:15 IST
+    - cron: "15 14 * * 1-5"   # 19:45 IST
+    - cron: "45 14 * * 1-5"   # 20:15 IST
+    - cron: "30 15 * * 1-5"   # 21:00 IST
+    - cron: "30 16 * * 1-5"   # 22:00 IST  (final catch-up pass)
   workflow_dispatch: {}   # adds a manual "Run workflow" button on the Actions tab
 
 permissions:
